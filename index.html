@@ -12,12 +12,100 @@
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<link type="text/css" href="assets/styles.css" rel="stylesheet"/>
+		<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+		<style>
+			#playerContainer {
+				position: fixed;
+				bottom: 20px;
+				left: 50%;
+				transform: translateX(-50%);
+				z-index: 1000;
+				background: rgba(0,0,0,0.5);
+				padding: 10px;
+				border-radius: 5px;
+			}
+			#captions {
+				position: fixed;
+				bottom: 80px;
+				left: 50%;
+				transform: translateX(-50%);
+				z-index: 1000;
+				background: rgb(35, 34, 39);
+				color: white;
+				padding: 10px;
+				border-radius: 5px;
+				text-align: center;
+				min-width: 200px;
+				font-size: 20px;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<img src="img/study_day.jpg" height="300"><br>
+					<p style="font-size: 0.7em;">Since 2007 I've worked with the collections and conservation department at SFMOMA specializing on the conservation and exhibition of digital media art. I'vs also worked on conservation and exhbition projects at MoMA, Solomon Guggenheim, Smithsonian Institution and the San Francisco Art Commission</p>
+				</section>
+
+				<section>
+					<div style="display: flex; justify-content: center; align-items: center; gap: 20px; height: 80vh; margin: 0 auto; max-width: 90vw; position: relative; top: -5vh;">
+						<img src="img/ybma.png" style="height: 100%; width: auto; object-fit: contain; max-width: 45%;">
+						<iframe src="https://player.vimeo.com/video/499043860?title=0&byline=0&portrait=0" style="height: 70%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+					</div>
+				</section>
+				<section>
+					<h2>Slide 3</h2>
+					<p>This is a new slide with some content</p>
+				</section>
+				<section>
+					<model-viewer src="assets/8_3_2024.glb" 
+						ar ar-modes="webxr scene-viewer quick-look" 
+						camera-controls 
+						auto-rotate
+						autoplay
+						preload
+						tone-mapping="neutral" 
+						shadow-intensity="2" 
+						exposure="0.46" 
+						shadow-softness="1" 
+						camera-orbit="-1100deg 79.12deg 0.6218m" 
+						field-of-view="12.54deg"
+						style="width: 100%; height: 500px;">
+						<div class="progress-bar hide" slot="progress-bar">
+							<div class="update-bar"></div>
+						</div>
+						<button slot="ar-button" id="ar-button">
+							View in your space
+						</button>
+						<div id="ar-prompt">
+							<img src="assets/ar_hand_prompt.png">
+						</div>
+					</model-viewer>
+					<!-- <p><a href="https://fyee727.github.io/" target="_blank">View 3D Model</a></p> -->
+				</section>
+				<section>
+					<h2>Slide 5</h2>
+					<p><a href="img/scanning_guidebook.png" target="_blank">
+						<img src="img/scanning_guidebook.png" alt="Scanning Guidebook" style="max-height: 400px;">
+					</a></p>	
+				</section>
+				<section>
+					<h2>Slide 6</h2>
+					<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+						<div id="appQRCode" style="background: white; padding: 20px; margin: 20px;"></div>
+						<p><a href="https://chsa.8thwall.app/ccbasf/" target="_blank">Launch AR Experience</a></p>
+					</div>
+				</section>
+				<section>
+					<h2>Slide 7</h2>
+					<p>Add your own content here!</p>
+					<aside class="notes">
+						Speaker notes go here
+					</aside>
+				</section>
 			</div>
 		</div>
 
@@ -25,15 +113,31 @@
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<script src="assets/script.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
+				transition: 'fade', // Setting default transition to fade
 
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			}).then(() => {
+				// Initialize our custom script after Reveal is ready
+				const div = document.createElement('div');
+				div.id = 'playerContainer';
+
+				// Generate QR code for 8thwall app
+				new QRCode(document.getElementById("appQRCode"), {
+					text: "https://chsa.8thwall.app/ccbasf/",
+					width: 256,
+					height: 256,
+					colorDark : "#000000",
+					colorLight : "#ffffff",
+					correctLevel : QRCode.CorrectLevel.H
+				});
 			});
 		</script>
 	</body>
